@@ -13,6 +13,18 @@ TGTD_OBJS += $(addprefix iscsi/, conn.o param.o session.o \
 		iscsid.o target.o chap.o sha1.o md5.o transport.o iscsi_tcp.o \
 		isns.o)
 
+
+
+ifneq ($(CFS),)
+CFS_OBJS += bs_cfs.o
+CFS_OBJS += $(addprefix cfs/, buffer.o  cfs.o  cfs_test.o \
+		chunk_buf.o  commiter.o  evict.o  log.o blake2/blake2b.o )
+
+#CFLAGS+=-std=gnu99 -Wall -ggdb3 -O0 -march=native -Wno-unused-variable -Wno-maybe-uninitialized -Wno-unused-but-set-variable 
+CFLAGS+=-std=gnu99 -Wall -ggdb3 -march=native 
+CFLAGS+=-D_FILE_OFFSET_BITS=64
+endif
+
 ifneq ($(CEPH_RBD),)
 MODULES += bs_rbd.so
 endif
@@ -60,6 +72,8 @@ TGTD_OBJS += tgtd.o mgmt.o target.o scsi.o log.o driver.o util.o work.o \
 		concat_buf.o parser.o spc.o sbc.o mmc.o osd.o scc.o smc.o \
 		ssc.o libssc.o bs_rdwr.o bs_ssc.o \
 		bs_null.o bs_sg.o bs.o libcrc32c.o bs_sheepdog.o
+
+TGTD_OBJS += ${CFS_OBJS}
 
 TGTD_DEP = $(TGTD_OBJS:.o=.d)
 
@@ -114,4 +128,4 @@ endif
 
 .PHONY: clean
 clean:
-	rm -f *.[od] *.so $(PROGRAMS) iscsi/*.[od] ibmvio/*.[od] fc/*.[od]
+	rm -f *.[od] *.so $(PROGRAMS) iscsi/*.[od] ibmvio/*.[od] fc/*.[od] cfs/*.[od] cfs/blake2/*.[od]

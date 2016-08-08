@@ -261,7 +261,15 @@ static int bs_init_signalfd(void)
 	int ret;
 	DIR *dir;
 
-	dir = opendir(BSDIR);
+	char *path;
+	if ((path = getenv("TGT_BSDIR")) != NULL) {
+		dir = opendir(path);
+		dprintf("backing-store module directory %s (%s)\n",
+				path, dir == NULL ? "failed" : "good");
+	} else {
+		dir = opendir(BSDIR);
+	}
+
 	if (dir == NULL) {
 		/* not considered an error if there are no modules */
 		dprintf("could not open backing-store module directory %s\n",
