@@ -21,7 +21,7 @@ CFS_OBJS += $(addprefix cfs/, buffer.o  cfs.o  cfs_test.o \
 		chunk_buf.o  commiter.o  evict.o  log.o blake2/blake2b.o )
 
 #CFLAGS+=-std=gnu99 -Wall -ggdb3 -O0 -march=native -Wno-unused-variable -Wno-maybe-uninitialized -Wno-unused-but-set-variable 
-CFLAGS+=-std=gnu99 -Wall -ggdb3 -march=native 
+CFLAGS+=-std=gnu99 -Wall -ggdb3
 CFLAGS+=-D_FILE_OFFSET_BITS=64
 endif
 
