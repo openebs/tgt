@@ -83,7 +83,6 @@ LDFLAGS = -Wl,-E,-rpath=$(libdir)
 all: $(PROGRAMS) $(MODULES)
 
 tgtd: $(TGTD_OBJS)
-	echo $(CC) $^ -o $@ $(LIBS)
 	$(CC) $^ -o $@ $(LDFLAGS) $(LIBS)
 
 -include $(TGTD_DEP)
