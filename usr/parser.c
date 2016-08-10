@@ -30,7 +30,7 @@ static int match_one(char *s, char *p, substring_t args[])
 {
 	char *meta;
 	int argc = 0;
-	unsigned long long ret;
+	unsigned long long ret = 0;
 
 	if (!p)
 		return 1;
@@ -84,7 +84,7 @@ static int match_one(char *s, char *p, substring_t args[])
 				return 0;
 			break;
 		default:
-			return 0;
+			return ret;
 		}
 		s = args[argc].to;
 		argc++;
